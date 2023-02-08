@@ -1,7 +1,7 @@
 import { Forage } from './wizard.model';
 import { AfterViewInit, Component, OnInit, Pipe, PipeTransform, TemplateRef, ViewChild } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { ListItem } from 'carbon-components-angular';
+import { ListItem, Step } from 'carbon-components-angular';
 import { Observable } from 'rxjs'
 import { WizardService } from './wizard.service';
 import CustomStore from 'devextreme/data/custom_store';
@@ -11,15 +11,16 @@ const URL = 'http://localhost:8080/api/forages';
 
 @Component({
   selector: 'app-wizard',
-  templateUrl: './wizard.component.html',
-  styleUrls: ['./wizard.component.scss']
+  templateUrl: './wizard.component.biss.html',
+  styleUrls: ['./wizard.component.biss.scss']
 })
 export class WizardComponent implements OnInit, AfterViewInit {
 
   @ViewChild('assignGridRef', { static: false }) dataGrid: DxDataGridComponent;
 
 
-  step: number = 1;
+  steps: Step[];
+  currentStep: number = 0;
   assignDataSource: any;
   groupDropdownItems$: Observable<ListItem[]>;
   technDropdownItems$: Observable<ListItem[]>;
@@ -58,6 +59,8 @@ export class WizardComponent implements OnInit, AfterViewInit {
 
     this.showFilterRow = false;
     this.showHeaderFilter = false;
+
+    this.steps = this.wizardService.getInitialSteps();
   }  
 
   globalForm =  this.fb.group({
@@ -104,15 +107,17 @@ export class WizardComponent implements OnInit, AfterViewInit {
   }
 
   nextStep(){
-    if (this.step <= 4){
+    ++this.currentStep;
+   /*  if (this.step <= 4){
       ++this.step;
-    }
+    } */
   }
 
   previousStep(){
-    if (this.step >= 1){
+    --this.currentStep;
+    /* if (this.step >= 1){
       --this.step;
-    }
+    } */
   }
 
   addAttribute(){

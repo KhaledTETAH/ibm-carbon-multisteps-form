@@ -1,0 +1,343 @@
+<div class="container">
+    <div ibmGrid>
+        <!-- <div ibmRow class="header">
+            <div ibmCol [columnNumbers]="{'lg': 8, 'md': 8, 'sm': 8}">
+                <ibm-breadcrumb [noTrailingSlash]="">
+                    <ibm-breadcrumb-item href="#1">
+                        Dashboard
+                    </ibm-breadcrumb-item>
+                </ibm-breadcrumb>
+            </div>
+        </div> -->
+        <div ibmRow class="sub-heading">
+            <div ibmCol [columnNumbers]="{'lg': 8, 'md': 8, 'sm': 8}">
+                <h4>Vertical multi-step form</h4>
+            </div>
+        </div>
+        <div ibmRow>
+            <div    ibmCol
+                    [columnNumbers]="{'lg': 2, 'md': 2, 'sm': 2}"
+                    class="indicator-wrapper">
+                    <div class="indicator">
+                        <ibm-progress-indicator
+                            orientation="vertical"
+                            [spacing]="'default'"
+                            [steps]="steps"
+                            [current]="currentStep">
+                        </ibm-progress-indicator>
+                    </div>
+            </div>
+            <div ibmCol [columnNumbers]="{'lg': 6, 'md': 6, 'sm': 6}" [ngSwitch]="currentStep">
+                <form [formGroup]="globalForm" (ngSubmit)="submit()">
+<!-- #######################################################   1   ############################################################### -->
+                            <div class="add-form" formGroupName="addForm" *ngSwitchCase="0">
+                                <div class="title-container">
+                                    Add
+                                </div>
+                                <div class="name-input-container">
+                                    <ibm-label>
+                                        Name *
+                                        <input  ibmText 
+                                                [size]="'sm'"
+                                                formControlName="name">
+                                    </ibm-label>
+                                </div>
+                    
+                                <div class="id-input-container">
+                                    <ibm-label>
+                                        ID * 
+                                        <input  ibmText 
+                                                [size]="'sm'"
+                                                formControlName="id">
+                                    </ibm-label>
+                                </div>
+                                
+                                <div class="input-container-1">
+                                    <div id="group-dropdown-container">
+                                        <div class="group-dropdown-elem">
+                                            <ibm-dropdown [label]="'Group'"
+                                                            [size]="'sm'"
+                                                            [dropUp]="false"
+                                                            formControlName="group">
+                                                            <ibm-dropdown-list [items]="groupDropdownItems$"></ibm-dropdown-list>
+                                            </ibm-dropdown>
+                                        </div>
+                                        <div class="group-dropdown-elem">
+                                            <ibm-dropdown [label]="'Model *'"
+                                                            [size]="'sm'"
+                                                            [dropUp]="false"
+                                                            placeholder="Chose..."
+                                                            formControlName="model">
+                                                            <ibm-dropdown-list [items]="[]"></ibm-dropdown-list>
+                                            </ibm-dropdown>
+                                        </div>
+                                        <div class="group-dropdown-elem">
+                                            <ibm-dropdown [label]="'Man'"
+                                                        [size]="'sm'"
+                                                        [dropUp]="false"
+                                                        placeholder="Chose..."
+                                                        formControlName="model">
+                                                        <ibm-dropdown-list [items]="[]"></ibm-dropdown-list>
+                                            </ibm-dropdown>
+                                        </div>
+                                     </div>
+                    
+                                    <div id="techn-dropdown-container">
+                                        <div class="techn-dropdown-elem">
+                                            <ibm-dropdown [label]="'Techn'"
+                                                        [size]="'sm'"
+                                                        [dropUp]="false"
+                                                        formControlName="techn">
+                                                        <ibm-dropdown-list [items]="technDropdownItems$"></ibm-dropdown-list>
+                                            </ibm-dropdown>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="description-container">
+                                    <ibm-label>Description
+                                        <textarea   ibmTextArea
+                                                    formControlName="description">
+                    
+                                        </textarea>
+                                    </ibm-label>
+                                </div>
+                                <div class="cer-container">
+                                    <div class="cer-title">
+                                        CER
+                                    </div>
+                                    <div class="cer-inputs-container">
+                                        <ibm-label>
+                                            Shared Secret * 
+                                            <input  ibmText 
+                                                    [size]="'sm'"
+                                                    formControlName="sharedSecret">
+                                        </ibm-label>
+                                        <ibm-label>
+                                            Confirm Secret * 
+                                            <input  ibmText 
+                                                    [size]="'sm'"
+                                                    formControlName="confirmSecret">
+                                        </ibm-label>
+                                    </div>
+                                </div>
+                                <!-- <div class="buutons-container">
+                                    <div class="buutons-container-elem">
+                                        <button id="finish-button" [ibmButton]="'primary'" [size]="'sm'" (click)="submit()">Finish</button>
+                                    </div>
+                                    <div class="buutons-container-elem">
+                                        <button id="next-button" [ibmButton]="'secondary'" [size]="'sm'" (click)="nextStep()">Next</button>
+                                    </div>
+                                    <div class="buutons-container-elem">
+                                        <button id="cancel-button" [ibmButton]="'ghost'" [size]="'sm'">Cancel</button>
+                                    </div>
+                                </div> -->
+                            </div>
+<!-- #######################################################   2   ############################################################### -->
+                            <div class="assign-form" formGroupName="assignForm" *ngSwitchCase="1">
+                                <div class="title-container">
+                                    Assign
+                                </div>
+                                <div class="assign-form-container">
+                                    <div class="data-list-container">
+                                        <dx-data-grid   #assignGridRef
+                                                        id="assign-grid-container"
+                                                        [dataSource]="assignDataSource"
+                                                        [columnAutoWidth]="true"
+                                                        [showBorders]="false"
+                                                        [showColumnLines]="false"
+                                                        [showRowLines]="false"
+                                                        [rowAlternationEnabled]="true"
+                                                        [focusedRowEnabled]="false"
+                                                        [hoverStateEnabled]="true"
+                                                        [allowColumnReordering]="true"
+                                                        [(selectedRowKeys)]="selectedRows">
+                    
+                                            <dxo-paging [enabled]="true" [pageSize]="10" [pageIndex]="0"></dxo-paging>
+                                            <dxo-selection mode="multiple" showCheckBoxesMode="always" width="300"></dxo-selection>
+                                            <dxo-search-panel   [visible]="true"
+                                                                [width]="240"
+                                                                placeholder="Search...">
+                                            </dxo-search-panel>
+                                            <dxi-column dataField="country"> </dxi-column>
+                                        </dx-data-grid>
+                    
+                    
+                                    </div>
+                                    <div class="details-tag-container">
+                                        <div class="details-title-container">
+                                            Details
+                                        </div>
+                                        <div class="details-container" *ngIf="assignGridRef.selectedRowKeys.length">
+                                            <div class="tags-container" *ngFor="let rowData of assignGridRef.instance.getSelectedRowsData()">
+                                                <ibm-tag type="cool-gray"  >
+                                                    {{rowData.country}}
+                                                </ibm-tag>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- <div class="buutons-container">
+                                    <div class="buutons-container-elem">
+                                        <button id="finish-button" [ibmButton]="'primary'" [size]="'sm'" (click)="submit()">Finish</button>
+                                    </div>
+                                    <div class="buutons-container-elem">
+                                        <button id="next-button" [ibmButton]="'secondary'" [size]="'sm'" (click)="nextStep()">Next</button>
+                                    </div>
+                                    <div class="buutons-container-elem">
+                                        <button id="next-button" [ibmButton]="'secondary'" [size]="'sm'" (click)="previousStep()">Back</button>
+                                    </div>
+                                    <div class="buutons-container-elem">
+                                        <button id="cancel-button" [ibmButton]="'ghost'" [size]="'sm'">Cancel</button>
+                                    </div>
+                                </div> -->
+                            </div>
+<!-- #######################################################   3   ############################################################### -->
+                            <div class="location-form" formGroupName="locationForm" *ngSwitchCase="2">
+                                <div class="title-container">
+                                    Location
+                                </div>
+                                <div class="location-input-container">
+                                    <div class="location-input-container-left">
+                                        <div class="location-input-left-elem">
+                                            <ibm-label>
+                                                City 
+                                                <input  ibmText 
+                                                        [size]="'sm'"
+                                                        formControlName="city">
+                                            </ibm-label>
+                                        </div>
+                                        <div class="location-input-left-elem">
+                                            <ibm-label>
+                                                Country 
+                                                <input  ibmText 
+                                                        [size]="'sm'"
+                                                        formControlName="country">
+                                            </ibm-label>
+                                        </div>
+                                        <div class="location-input-left-elem">
+                                            <ibm-label>
+                                                Latitude 
+                                                <input  ibmText 
+                                                        [size]="'sm'"
+                                                        formControlName="latitude">
+                                            </ibm-label>
+                                        </div>
+                                        <div class="location-input-left-elem">
+                                            <ibm-label>
+                                                Elevation 
+                                                <input  ibmText 
+                                                        [size]="'sm'"
+                                                        formControlName="elevation">
+                                            </ibm-label>
+                                        </div>
+                                    </div>
+                                    <div class="location-input-container-right">
+                                        <div class="location-input-right-elem">
+                                            <ibm-label>
+                                                State 
+                                                <input  ibmText 
+                                                        [size]="'sm'"
+                                                        formControlName="state">
+                                            </ibm-label>
+                                        </div>
+                                        <div class="location-input-right-elem">
+                                            <ibm-dropdown [label]="'Timezone'"
+                                                            [size]="'sm'"
+                                                            [dropUp]="false"
+                                                            placeholder="Choose..."
+                                                            formControlName="timezone">
+                                                            <ibm-dropdown-list [items]="[]"></ibm-dropdown-list>
+                                            </ibm-dropdown>
+                                        </div>
+                                        <div class="location-input-right-elem">
+                                            <ibm-label>
+                                                Longitude 
+                                                <input  ibmText 
+                                                        [size]="'sm'"
+                                                        formControlName="longitude">
+                                            </ibm-label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- <div class="buutons-container">
+                                    <div class="buutons-container-elem">
+                                        <button id="finish-button" [ibmButton]="'primary'" [size]="'sm'" (click)="submit()">Finish</button>
+                                    </div>
+                                    <div class="buutons-container-elem">
+                                        <button id="next-button" [ibmButton]="'secondary'" [size]="'sm'" (click)="nextStep()">Next</button>
+                                    </div>
+                                    <div class="buutons-container-elem">
+                                        <button id="next-button" [ibmButton]="'secondary'" [size]="'sm'" (click)="previousStep()">Back</button>
+                                    </div>
+                                    <div class="buutons-container-elem">
+                                        <button id="cancel-button" [ibmButton]="'ghost'" [size]="'sm'">Cancel</button>
+                                    </div>
+                                </div> -->
+                            </div>
+<!-- #######################################################   4   ############################################################### -->
+                            <div class="assign-form" formGroupName="customAttributesForm" *ngSwitchCase="3">
+                                <div class="title-container">
+                                    Custom Attributes
+                                </div>
+                                <ng-container formArrayName="attributes">
+                                    <ng-container *ngFor="let f of attributes.controls; let i=index">
+                                        <div class="custom-attribute-form-container" [formGroupName]="i">
+                                            <div class="custom-attribute-left-elem">
+                                                <ibm-label>
+                                                    Key 
+                                                    <input  ibmText 
+                                                            [size]="'sm'"
+                                                            formControlName="key">
+                                                </ibm-label>
+                                            </div>
+                                            <div class="custom-attribute-right-elem">
+                                                <ibm-label>
+                                                    Value 
+                                                    <input  ibmText 
+                                                            [size]="'sm'"
+                                                            formControlName="value">
+                                                </ibm-label>
+                                            </div>
+                                            <div class="custom-attribute-delete-button" (click)="deleteCustomAttribute(i)">
+                                                <svg class="custom-attribute-delete-button-svg" ibmIconDelete size="24"></svg>
+                                            </div>
+                                        </div>
+                                    </ng-container>
+                                </ng-container>
+                                <button id="finish-button" 
+                                            [ibmButton]="'primary'" 
+                                            (click)="addAttribute()">
+                                            Add Attribute
+                                            <svg class="bx--btn__icon" ibmIconAddAlt size="32"></svg>
+                                    </button>
+                                <!-- <div class="buutons-container">
+                                    <div class="buutons-container-elem">
+                                        <button id="finish-button" [ibmButton]="'primary'" [size]="'sm'" (click)="submit()">Finish</button>
+                                    </div>
+                                    <div class="buutons-container-elem">
+                                        <button id="next-button" [ibmButton]="'secondary'" [size]="'sm'" (click)="previousStep()">Back</button>
+                                    </div>
+                                    <div class="buutons-container-elem">
+                                        <button id="cancel-button" [ibmButton]="'ghost'" [size]="'sm'">Cancel</button>
+                                    </div>
+                                </div> -->
+                            </div>
+                            <div class="buutons-container">
+                                <div class="buutons-container-elem">
+                                    <button id="finish-button" [ibmButton]="'primary'" [size]="'sm'" (click)="submit()">Finish</button>
+                                </div>
+                                <div class="buutons-container-elem" *ngIf="currentStep != 3">
+                                    <button id="next-button" [ibmButton]="'secondary'" [size]="'sm'" (click)="nextStep()">Next</button>
+                                </div>
+                                <div class="buutons-container-elem">
+                                    <button id="next-button" [ibmButton]="'secondary'" [size]="'sm'" (click)="previousStep()">Back</button>
+                                </div>
+                                <div class="buutons-container-elem">
+                                    <button id="cancel-button" [ibmButton]="'ghost'" [size]="'sm'">Cancel</button>
+                                </div>
+                            </div>
+                        </form>
+            </div>
+        </div>
+    </div>
+</div>
